@@ -1,0 +1,18 @@
+{
+  "workbench.colorTheme": "Visual Studio Light",
+  "editor.minimap.enabled": false,
+  "editor.rename.enablePreview": false,
+  "git.confirmSync": false,
+  "workbench.editor.enablePreview": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "files.trimTrailingWhitespace": true,
+  "editor.renderWhitespace": "all",
+  "editor.rulers": [
+    100
+  ],
+  "window.zoomLevel": 1,
+  "cSpell.words": [
+    "encryptors",
+    "ETSI"
+  ],
+}
