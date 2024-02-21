@@ -112,23 +112,37 @@ None of these three files is uploaded to QuKayDee;
 instead they are used when the client invokes an ETSI QKD API
 (see `curl` example below).
 
-
-
-
-
-
 # Server certificates and keys
 
-As mentioned above, the KME needs a server certificate and a server private key to authenticate
-itself to the SAE.
+So far, we have described how to generate the client certificate and client key that the SAE uses to
+authenticate itself to the KME.
+
+Each KME also needs a server certificate and a server private key to authenticate itself to the SAE.
 
 The bash scripts in this repository are _not_ intended to generate these server certificates and
 private keys.
 Instead, the cloud-hosted QuKayDee software generates the server certificate and the private key
 for each KME.
 
+Once again, one possible approach would be to download a separate server certificate
+for each KME, but that would be cumbersome.
 
+Instead, QuKayDee generates one single self-signed server root certificate authority (CA)
+certificate and key for all KMEs.
 
+You can download this server CA certificate by going to the API menu and clicking on the
+Download Server CA Certificate button.
 
+This downloads the following file into the Downloads folder on your computer:
 
-# Putting it all together: invoking the ETSI QKD
+<pre>
+$ <b>ls</b>
+account-1-server-ca-qukaydee-com.crt
+</pre>
+
+The `account-1` in the filename is the account identifier for your account in QuKayDee
+(each user gets a different server CA certificate).
+
+Move this file to the same directory where your client certificates and keys are.
+
+# Invoking the ETSI QKD API
