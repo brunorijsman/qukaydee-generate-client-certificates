@@ -9,4 +9,6 @@ openssl req -x509 \
             -newkey rsa:2048 \
             -subj "/CN=client-root-ca" \
             -keyout client-root-ca.key \
-            -out client-root-ca.crt 
+            -out client-root-ca.crt \
+            >/dev/null \
+            2>/dev/null

@@ -19,7 +19,9 @@ fi
 
 # Generate client private key
 openssl genrsa \
-    -out ${client_name}.key 2048
+    -out ${client_name}.key 2048 \
+    >/dev/null \
+    2>/dev/null
 
 # Generate client certificate signing request configuration
 cat > ${client_name}.csr.conf <<EOF
@@ -42,7 +44,10 @@ openssl req \
     -new \
     -key ${client_name}.key \
     -out ${client_name}.csr \
-    -config ${client_name}.csr.conf
+    -config ${client_name}.csr.conf \
+    >/dev/null \
+    2>/dev/null
+
 
 # Generate client certificate configuration
 cat > ${client_name}.cert.conf <<EOF
@@ -63,7 +68,9 @@ openssl x509 -req \
              -out ${client_name}.crt \
              -days 365 \
              -sha256 \
-             -extfile ${client_name}.cert.conf
+             -extfile ${client_name}.cert.conf \
+             >/dev/null \
+             2>/dev/null
 
 # Create the client PEM file (combined private key and certificate chain)
 cat ${client_name}.key ${client_name}.crt client-root-ca.crt > ${client_name}.pem
