@@ -112,7 +112,7 @@ None of these three files is uploaded to QuKayDee;
 instead they are used when the client invokes an ETSI QKD API
 (see `curl` example below).
 
-# Server certificates and keys
+# Generating server certificates and keys
 
 So far, we have described how to generate the client certificate and client key that the SAE uses to
 authenticate itself to the KME.
@@ -146,3 +146,56 @@ The `account-1` in the filename is the account identifier for your account in Qu
 Move this file to the same directory where your client certificates and keys are.
 
 # Invoking the ETSI QKD API
+
+Now that we know how to generate both the client and server certificates and keys,
+we explain how to use them to invoke the ETSI QKD 014 API provided by QuKayDee.
+
+There are multiple ways to invoke the API; here we will use `curl`.
+
+This example assumes that you have:
+ * Created an account in QuKayDee (which is free).
+ * Configured two KMEs (kme-1 and kme-2).
+ * Configured two SAEs (sae-1 and sae-2).
+ * Configured one key stream (ks-1) between sae-1 and sae-2.
+ * Downloaded the server CA certificate.
+ * Generated and uploaded the client CA certificate.
+ * Generated the client SAE certificates and keys for at least sae-1.
+
+See the QuKayDee getting started guide
+[https://qukaydee.com/pages/getting_started](https://qukaydee.com/pages/getting_started)
+for more details on how to configure the KMEs, the SAEs, and the key stream.
+
+That same guide also contains examples of how to invoke the other APIs and describes
+other tools for invoking the API.
+
+The following `curl` command invokes the ETSI QKD 014 API to retrieve the status of
+the sae-1 to sae-2 key stream:
+
+<pre>
+$ <b>curl \
+  --silent \
+  --cacert account-1-server-ca-qukaydee-com.crt \
+  --cert sae-1.crt \
+  --key sae-1.key \
+  --header "Accept: application/json" \
+  https://kme-1.acct-1.etsi-qkd-api.qukaydee.com/api/v1/keys/sae-2/status \
+  | jq</b>
+</pre>
+
+This produces output similar to this:
+
+<pre>
+{
+  "source_KME_ID": "kme-1",
+  "target_KME_ID": "kme-2",
+  "master_SAE_ID": "sae-1",
+  "slave_SAE_ID": "sae-2",
+  "key_size": 512,
+  "stored_key_count": 1953,
+  "max_key_count": 1953,
+  "max_key_per_request": 100,
+  "max_key_size": 100000,
+  "min_key_size": 1,
+  "max_SAE_ID_count": 9
+}
+</pre>
